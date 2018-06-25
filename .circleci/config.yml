@@ -14,3 +14,24 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: npm run test
+  deploy-job:
+    docker: 
+      - image: circleci/node:8-browsers
+    steps: 
+      - checkout
+      - run: npm install
+      - run: npm run build
+      - run: cd functions && npm install && npm run build
+      - run: firebase deploy --token=$Firebase_Token
+workflows:
+  version: 1
+
+  - test_and_deploy: 
+      jobs:
+        - test-job
+        - deploy-job:
+          requires:
+            - test-job
+          filters:
+            branches: 
+              only: master
