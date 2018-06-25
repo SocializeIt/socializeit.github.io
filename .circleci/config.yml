@@ -1,0 +1,16 @@
+
+version: 1
+jobs:
+  test-job: 
+    docker:
+      - image: circleci/node:8-browsers
+    steps:
+      - checkout
+
+      # Cache to enable faster future jobs
+      - run: npm install
+      - save_cache:
+          paths: 
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+      - run: npm run test
