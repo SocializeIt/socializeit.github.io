@@ -60,7 +60,7 @@ jobs:
       - checkout
       - run: npm install
       - run: npm run build
-      # - run: cd functions && npm install && npm run build
+      - run: cd functions && npm install && npm run build
       - run: ./node_modules/.bin/firebase deploy --token=$FIREBASE_DEPLOY_TOKEN
 
 workflows:
@@ -70,8 +70,8 @@ workflows:
     jobs:
       - test-job
       - deploy-job:
-          requires:
-            - test-job
+          # requires:
+          #   - test-job
           filters:
             branches:
               only: master

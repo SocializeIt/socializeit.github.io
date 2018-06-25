@@ -10,8 +10,8 @@ export class ProfileComponent implements OnInit {
   me: any;
   constructor() { 
     this.gh = new Github({
-      username: 'mouadcherkaoui',
-      password: 'PdynamicW!014'
+      username: 'xxxxxxx',
+      password: 'xxxxxxx'
     });
     this.me = this.gh.getUser();
     console.log(this.me);
