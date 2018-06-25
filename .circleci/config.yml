@@ -1,9 +1,9 @@
 
-version: 1
+version: 2
 jobs:
   test-job: 
     docker:
-      - image: circleci/node:8-browsers
+      - image: circleci/node:7.10
     steps:
       - checkout
 
@@ -16,7 +16,7 @@ jobs:
       - run: npm run test
   deploy-job:
     docker: 
-      - image: circleci/node:8-browsers
+      - image: circleci/node:7.10
     steps: 
       - checkout
       - run: npm install
@@ -24,7 +24,7 @@ jobs:
       - run: cd functions && npm install && npm run build
       - run: ./node_modules/.bin/firebase deploy --token=$FIREBASE_DEPLOY_TOKEN
 workflows:
-  version: 1
+  version: 2
 
   - test_and_deploy: 
       jobs:
