@@ -1,41 +1,80 @@
 
+# version: 2
+# jobs:
+#   test-job: 
+#     docker:
+#       - image: circleci/node:7.10
+#     steps:
+#       - checkout
+
+#       # Cache to enable faster future jobs
+#       - run: npm install
+#       - save_cache:
+#           paths: 
+#             - node_modules
+#           key: v1-dependencies-{{ checksum "package.json" }}
+#       - run: npm run test
+#   deploy-job:
+#     docker: 
+#       - image: circleci/node:7.10
+#     steps: 
+#       - checkout
+#       - run: npm install
+#       - run: npm run build
+#       - run: cd functions && npm install && npm run build
+#       - run: ./node_modules/.bin/firebase deploy --token=$FIREBASE_DEPLOY_TOKEN
+# workflows:
+#   version: 2
+
+#   - test_and_deploy: 
+#       jobs:
+#         - test-job
+#         - deploy-job:
+#           requires:
+#             - test-job
+#           filters:
+#             branches: 
+#               only: master
+
 version: 2
 jobs:
-  test-job: 
+  test-job:
     docker:
-      - image: circleci/node:7.10
+      - image: circleci/node:8-browsers
     steps:
       - checkout
 
       # Cache to enable faster future jobs
       - run: npm install
       - save_cache:
-          paths: 
+          paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
+
+      # Run tests
       - run: npm run test
   deploy-job:
-    docker: 
-      - image: circleci/node:7.10
-    steps: 
+    docker:
+      - image: circleci/node:8-browsers
+    steps:
       - checkout
       - run: npm install
       - run: npm run build
       - run: cd functions && npm install && npm run build
       - run: ./node_modules/.bin/firebase deploy --token=$FIREBASE_DEPLOY_TOKEN
+
 workflows:
   version: 2
 
-  - test_and_deploy: 
-      jobs:
-        - test-job
-        - deploy-job:
+  -test_and_deploy:
+    jobs:
+      - test-job
+      - deploy-job:
           requires:
             - test-job
           filters:
-            branches: 
+            branches:
               only: master
-
 # Javascript Node CircleCI 2.0 configuration file
 #
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
