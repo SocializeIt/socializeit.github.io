@@ -6,6 +6,7 @@ import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection 
 import { Observable } from 'rxjs';
 import { switchMap, switchMapTo, map } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { NotifyService } from './notify.service';
 
 
 interface User {
@@ -22,6 +23,7 @@ export class AuthService {
   user: Observable<User>;
   constructor(private afAuth: AngularFireAuth,
     private afs: AngularFirestore, 
+    private notify: NotifyService,
     private router: Router) { 
       this.user = this.afAuth.authState
         .pipe(
@@ -31,12 +33,17 @@ export class AuthService {
         )
   }
 
-  emailSignup(email: string, password: string) {
+  emailSignup(email: string, password: string, data?) {
     return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
-      .then(user => {
-        return this.setUserData(user);
+      .then(userCreds => {
+        console.log(userCreds);
+        return this.setUserData(userCreds.user, data);
       })
       .catch(error => this.handleError(error));
+  }
+
+  emailLogin(email, password) {
+    return this.afAuth.auth.signInWithEmailAndPassword(email, password);
   }
 
   googleLogin() {
@@ -51,12 +58,21 @@ export class AuthService {
       });
   }
 
-  setUserData(user) {
-    const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.id}`);
+  setUserDoc(user) {
+    const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
     const data = {
       uid: user.uid,
       email: user.email
     };
+    return userRef.set(data); 
+  }
+
+  setUserData(user, data?) {
+
+    const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
+    data.uid = user.uid;
+    data.email = user.email
+    
     return userRef.set(data); 
   }
 
@@ -78,6 +94,6 @@ export class AuthService {
 
   handleError(error) {
     console.log(error);
-    // this.notify.update(error.message, 'error');
+    this.notify.update(error.message, 'error');
   }
 }

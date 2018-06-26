@@ -7,13 +7,14 @@ import { SocialcardsListComponent } from '../components/socialcards-list/socialc
 import { CommunitiesListComponent } from '../components/communities-list/communities-list.component';
 import { ReadmeComponent } from '../components/readme/readme.component';
 import { SignupMultiComponent } from '../components/signup-multi/signup-multi.component';
+import { AuthGuard } from '../core/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'profile', pathMatch: 'full'},
-  { path: 'profile', component: ProfileComponent},
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
   { path: 'register', component: SignupMultiComponent},
   { path: 'login', component: LoginComponent},
-  { path: 'social-cards', component: SocialcardsListComponent},
+  { path: 'social-cards', component: SocialcardsListComponent}, //, canActivate: [AuthGuard]},
   { path: 'communities', component: CommunitiesListComponent},
   { path: 'readme', component: ReadmeComponent}
 ];
