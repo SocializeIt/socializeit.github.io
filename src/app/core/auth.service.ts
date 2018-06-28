@@ -33,6 +33,11 @@ export class AuthService {
         )
   }
 
+  private updateStatus(status: string) {
+    if(!this.user) {
+      
+    }
+  }
   emailSignup(email: string, password: string, data?) {
     return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
       .then(userCreds => {

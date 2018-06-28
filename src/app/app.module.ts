@@ -18,6 +18,8 @@ import { SocialcardsListComponent } from './components/socialcards-list/socialca
 import { CommunitiesListComponent } from './components/communities-list/communities-list.component';
 import { ReadmeComponent } from './components/readme/readme.component';
 import { UserFormComponent } from './components/user-form/user-form.component';
+import { HttpClientModule } from '@angular/common/http';
+import { FacebookModule } from 'ngx-facebook';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,9 @@ import { UserFormComponent } from './components/user-form/user-form.component';
   schemas: [],
   imports: [
     AppRoutingModule,
+    FacebookModule.forRoot(),
     BrowserModule,
+    HttpClientModule,
     NoopAnimationsModule,
     ReactiveFormsModule,
     FormsModule,
