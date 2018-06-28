@@ -8,11 +8,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@nestjs/common");
 const fb_controller_1 = require("../controllers/fb.controller");
+const auth_controller_1 = require("../controllers/auth.controller");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     common_1.Module({
-        controllers: [fb_controller_1.FacebookFeedsController]
+        controllers: [auth_controller_1.FacebookAuthController, fb_controller_1.FacebookFeedsController]
     })
 ], AppModule);
 exports.AppModule = AppModule;

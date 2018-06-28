@@ -1,0 +1,14 @@
+export class UserDto {
+  readonly id?: number | string | null;
+  readonly fb_id?: number | string | null;
+  readonly fb_token?: string;
+  readonly fb_email?: string;
+  readonly name: string;
+  readonly username?: string;
+  readonly email?: string;
+  readonly age?: number;
+  readonly location?: string;
+  readonly avatartUrl?: string;
+  readonly interests?: string | string[] | null;
+  readonly participating?: string | string[] | null;
+}

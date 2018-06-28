@@ -29,7 +29,8 @@ export class FBStrategy extends  FBTokenStrategy {//  PassportStrategy(Strategy)
             } 
             return done(null, profile);
         } catch (error) {
-            console.log(`[fb.strategy->verifyFb() Catch block]:: error ${JSON.stringify(error)}`);            
+            console.log(`[fb.strategy->verifyFb() Catch block]:: error ${JSON.stringify(error)}`);  
+            return null;          
         }
     }
 

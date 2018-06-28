@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Profile } from 'passport-facebook-token';
 import * as admin from 'firebase-admin';
+import { fbUserDto } from '../interfaces/fbuser.dto';
 
 @Injectable() 
 export class UsersService {
@@ -9,12 +10,18 @@ export class UsersService {
      */
     constructor() {        
     }
+
+    findOne(criteria: any) {
+        return new fbUserDto();
+    }
+
     findOneByEmail(email: any) {
         return admin.firestore().doc(`fbusers/${email}`).get().then(u => u.data());
     }
 
     async upsertFbUser(profile: Profile, accessToken: string) {
-        let existingUser = await this.findOneByEmail(profile.id);
+        let resultToReturn: fbUserDto;
+        let existingUser = await this.findOneByEmail(profile.id).then(u => resultToReturn = u.data() as fbUserDto);
         try {
           if (!existingUser) {
             let savedUser = await this.saveUser({

@@ -41,6 +41,7 @@ let FBStrategy = class FBStrategy extends FBTokenStrategy {
             }
             catch (error) {
                 console.log(`[fb.strategy->verifyFb() Catch block]:: error ${JSON.stringify(error)}`);
+                return null;
             }
         });
     }

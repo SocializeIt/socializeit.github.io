@@ -15,56 +15,50 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@nestjs/common");
-const admin = require("firebase-admin");
-const fbuser_dto_1 = require("../interfaces/fbuser.dto");
-let UsersService = class UsersService {
-    /**
-     *
-     */
-    constructor() {
+const jwt = require("jsonwebtoken");
+const config_1 = require("config");
+let AuthService = class AuthService {
+    constructor(userSvc) {
+        this.userSvc = userSvc;
     }
-    findOne(criteria) {
-        return new fbuser_dto_1.fbUserDto();
+    createToken(fb_id, name, email) {
+        const expiresIn = 60 * 60 * 24 * 60, secretOrKey = config_1.get('secrets.jwtStr');
+        let user = { fb_id, name, email };
+        return jwt.sign(user, secretOrKey, { expiresIn });
     }
-    findOneByEmail(email) {
-        return admin.firestore().doc(`fbusers/${email}`).get().then(u => u.data());
-    }
-    upsertFbUser(profile, accessToken) {
+    validateJwtUser(payload) {
         return __awaiter(this, void 0, void 0, function* () {
-            let resultToReturn;
-            let existingUser = yield this.findOneByEmail(profile.id).then(u => resultToReturn = u.data());
-            try {
-                if (!existingUser) {
-                    let savedUser = yield this.saveUser({
-                        name: profile.displayName,
-                        email: profile.emails[0].value || null,
-                        avatarUrl: profile.photos[0].value || null,
-                        fb_id: profile.id,
-                        fb_token: accessToken
-                    });
-                    if (savedUser) {
-                        return savedUser;
-                    }
-                    else {
-                        return null;
-                    }
-                }
-                else {
-                    return existingUser;
-                }
+            let user = yield this.userSvc.findOne({ fb_id: payload.fb_id });
+            if (user) {
+                return user.fb_id;
             }
-            catch (e) {
-                console.log('[user.svc->upsertFbUser()');
-                console.dir(e);
+            else {
+                console.log(`[auth.service->validateJwtUser()]:: user is ${JSON.stringify(user)}`);
                 return null;
             }
         });
     }
-    saveUser(user) {
+    validateOrCreateFbUser(profile, accessToken) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let fbUser = yield this.userSvc.upsertFbUser(profile, accessToken);
+                if (fbUser) {
+                    return fbUser;
+                }
+                else {
+                    console.log(`[auth.service->validateOrCreateFbUser()]:: user is ${JSON.stringify(fbUser)}`);
+                    return null;
+                }
+            }
+            catch (e) {
+                console.log(`[auth.svc->validateORCreateFbUser()]:: ${JSON.stringify(e)}`);
+                return null;
+            }
+        });
     }
 };
-UsersService = __decorate([
-    common_1.Injectable()
-], UsersService);
-exports.UsersService = UsersService;
-//# sourceMappingURL=users.service.js.map
+AuthService = __decorate([
+    common_1.Component()
+], AuthService);
+exports.AuthService = AuthService;
+//# sourceMappingURL=fbauth.startegy.js.map
