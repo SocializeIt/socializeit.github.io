@@ -26,7 +26,7 @@ const startNestApp = async (expressInstance: Express) => {
         }); //, (t, u, i) => { console.log(t,u,i);}));
         passport.use(new TwitterStrategy({
 
-        }));
+        });
         console.log('pasport', JSON.stringify(passport));
         instance.use(passport.initialize({ userProperty: 'user'}));
         instance.init();
