@@ -19,7 +19,7 @@ import { CommunitiesListComponent } from './components/communities-list/communit
 import { ReadmeComponent } from './components/readme/readme.component';
 import { UserFormComponent } from './components/user-form/user-form.component';
 import { HttpClientModule } from '@angular/common/http';
-import { FacebookModule } from 'ngx-facebook';
+import { FacebookModule, FacebookService } from 'ngx-facebook';
 
 @NgModule({
   declarations: [
@@ -44,7 +44,7 @@ import { FacebookModule } from 'ngx-facebook';
     FormsModule,
     CoreModule.forRoot()
   ],
-  providers: [FirestoreService],
+  providers: [FirestoreService, FacebookService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
