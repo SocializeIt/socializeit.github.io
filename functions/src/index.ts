@@ -37,7 +37,7 @@ server.route('/auth/facebook/oauth')
         console.log(err);
         console.log(user);
         console.log(info);
-    }));
+    }).then(v => console.log(v)).catch(e => console.log(e)));
 
 export const api = functions.https.onRequest(server);
 // // Start writing Firebase Functions
