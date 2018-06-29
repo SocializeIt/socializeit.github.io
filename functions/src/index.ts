@@ -27,7 +27,7 @@ const startNestApp = async (expressInstance: express.Express) => {
         console.log('pasport', JSON.stringify(passport));
         instance.use(passport.initialize({ userProperty: 'user'}));
         instance.init();
-    });
+    }).catch(e => console.log(e));
 };
 
 startNestApp(server);

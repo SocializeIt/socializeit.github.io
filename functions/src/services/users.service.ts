@@ -21,7 +21,7 @@ export class UsersService {
 
     async upsertFbUser(profile: Profile, accessToken: string) {
         let resultToReturn: fbUserDto;
-        let existingUser = this.findOneByEmail(profile.id).then(u => resultToReturn = u.data() as fbUserDto);
+        let existingUser = this.findOneByEmail(profile.id).then(u => resultToReturn = u.data() as fbUserDto).catch(e => console.log(e));
         try {
           if (!existingUser) {
             let savedUser = await this.saveUser({
