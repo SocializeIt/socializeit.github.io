@@ -11,6 +11,9 @@
   },
   "main": "lib/index.js",
   "dependencies": {
+    "@nestjs/common": "^5.0.1",
+    "@nestjs/core": "^5.0.1",
+    "@nestjs/websockets": "^5.0.1",
     "config": "^1.30.0",
     "cors": "^2.8.4",
     "express": "^4.16.3",
