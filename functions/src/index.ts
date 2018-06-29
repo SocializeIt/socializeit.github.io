@@ -24,7 +24,7 @@ const log = (v) => {
 
     console.log('pasport', JSON.stringify(passport));
     server.use(passport.initialize({ userProperty: 'user'}));
-    server.init(); // .then(e => log(e)).catch(e => log(e));
+    // server.init(); // .then(e => log(e)).catch(e => log(e));
 
 server.route('/auth/facebook/oauth')
     .get(passport.authenticate('facebook', function(err, user, info) {
