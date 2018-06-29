@@ -36,7 +36,7 @@ app.route('/auth/facebook/oauth')
     }));    
 }
 
-startNestApplication(server);
+startNestApplication(server).then(v => log(v)).catch(e => log(e));
 
 export const api = functions.https.onRequest(server);
 // // Start writing Firebase Functions
