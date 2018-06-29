@@ -16,12 +16,12 @@ export class UsersService {
     }
 
     findOneByEmail(email: any) {
-        return admin.firestore().doc(`fbusers/${email}`).get().then(u => u.data());
+        return admin.firestore().doc(`fbusers/${email}`).get();//.then(u => u.data());
     }
 
     async upsertFbUser(profile: Profile, accessToken: string) {
         let resultToReturn: fbUserDto;
-        let existingUser = await this.findOneByEmail(profile.id).then(u => resultToReturn = u.data() as fbUserDto);
+        let existingUser = this.findOneByEmail(profile.id).then(u => resultToReturn = u.data() as fbUserDto);
         try {
           if (!existingUser) {
             let savedUser = await this.saveUser({
@@ -47,7 +47,5 @@ export class UsersService {
         }    
     }
     
-    saveUser(user) {
-
-    }
+    saveUser(user) { }
 }
