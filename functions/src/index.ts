@@ -1,20 +1,17 @@
 import * as functions from 'firebase-functions';
 import * as express from 'express';
-import { Express } from 'express';
 import * as passport from 'passport';
 import * as cors from 'cors';
-import { json } from 'json';
 
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './modules/app.module';
 import { INestApplication } from '@nestjs/common';
-import { app } from 'firebase-admin';
 
 const FacebookStrategy = require('passport-facebook').Strategy;
-const TwitterStrategy = require('passport-twitter').Strategy;
-const server: Express = express();
+// const TwitterStrategy = require('passport-twitter').Strategy;
+const server: express.Express = express();
 
-const startNestApp = async (expressInstance: Express) => {
+const startNestApp = async (expressInstance: express.Express) => {
     const app: Promise<INestApplication> = NestFactory.create(AppModule, expressInstance);
     app.then(instance => {
         instance.use(cors());
@@ -24,9 +21,9 @@ const startNestApp = async (expressInstance: Express) => {
             callbackURL: 'http://localhost:5001/socialize-it/us-central1/api/auth/callback',
             redirectURL: 'http://localhost:5001/socialize-it/us-central1/api/auth/callback'            
         })); //, (t, u, i) => { console.log(t,u,i);}));
-        passport.use(new TwitterStrategy({
+        // passport.use(new TwitterStrategy({
 
-        }));
+        // }));
         console.log('pasport', JSON.stringify(passport));
         instance.use(passport.initialize({ userProperty: 'user'}));
         instance.init();
