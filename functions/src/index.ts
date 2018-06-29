@@ -11,6 +11,10 @@ const FacebookStrategy = require('passport-facebook').Strategy;
 // const TwitterStrategy = require('passport-twitter').Strategy;
 const server: express.Express = express();
 
+const log = (v) => {
+    console.log(v);
+}
+
 const startNestApp = async (expressInstance: express.Express) => {
     const app = await NestFactory.create(AppModule, expressInstance);
     app.use(cors());
@@ -22,10 +26,9 @@ const startNestApp = async (expressInstance: express.Express) => {
 
     console.log('pasport', JSON.stringify(passport));
     app.use(passport.initialize({ userProperty: 'user'}));
-    app.init();
+    app.init().then(e => log(e)).catch(e => log(e));
     };
-
-startNestApp(server);
+startNestApp(server).then(v => log(v)).catch(e => log(e));
 
 server.route('/auth/facebook/oauth')
     .get(passport.authenticate('facebook', function(err, user, info) {
