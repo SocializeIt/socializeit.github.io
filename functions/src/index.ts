@@ -23,10 +23,10 @@ const startNestApp = async (expressInstance: Express) => {
             clientSecret: 'c3048a2745b2973133478e0a8f3f99bc',
             callbackURL: 'http://localhost:5001/socialize-it/us-central1/api/auth/callback',
             redirectURL: 'http://localhost:5001/socialize-it/us-central1/api/auth/callback'            
-        }); //, (t, u, i) => { console.log(t,u,i);}));
+        })); //, (t, u, i) => { console.log(t,u,i);}));
         passport.use(new TwitterStrategy({
 
-        });
+        }));
         console.log('pasport', JSON.stringify(passport));
         instance.use(passport.initialize({ userProperty: 'user'}));
         instance.init();
