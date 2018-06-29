@@ -12,23 +12,18 @@ const FacebookStrategy = require('passport-facebook').Strategy;
 const server: express.Express = express();
 
 const startNestApp = async (expressInstance: express.Express) => {
-    const app = NestFactory.create(AppModule, expressInstance);
-    app.then(instance => {
-        instance.use(cors());
-        passport.use(new FacebookStrategy({
-            clientID: '636207509774692',
-            clientSecret: 'c3048a2745b2973133478e0a8f3f99bc',
-            callbackURL: 'http://localhost:5001/socialize-it/us-central1/api/auth/callback',
-            redirectURL: 'http://localhost:5001/socialize-it/us-central1/api/auth/callback'            
-        })); //, (t, u, i) => { console.log(t,u,i);}));
-        // passport.use(new TwitterStrategy({
+    const app = await NestFactory.create(AppModule, expressInstance);
+    app.use(cors());
+    passport.use(new FacebookStrategy({
+        clientID: '636207509774692',
+        clientSecret: 'c3048a2745b2973133478e0a8f3f99bc',
+        callbackURL: 'http://localhost:5001/socialize-it/us-central1/api/auth/callback'
+    }));
 
-        // }));
-        console.log('pasport', JSON.stringify(passport));
-        instance.use(passport.initialize({ userProperty: 'user'}).then(v => v.getHttpServer()).catch(e => console.log(e)));
-        instance.init().then(v => v.getHttpServer()).catch(e => console.log(e));
-    }).catch(e => console.log(e));
-};
+    console.log('pasport', JSON.stringify(passport));
+    app.use(passport.initialize({ userProperty: 'user'}));
+    app.init();
+    };
 
 startNestApp(server);
 
@@ -37,7 +32,7 @@ server.route('/auth/facebook/oauth')
         console.log(err);
         console.log(user);
         console.log(info);
-    }).then(v => console.log(v)).catch(e => console.log(e)));
+    }));
 
 export const api = functions.https.onRequest(server);
 // // Start writing Firebase Functions
