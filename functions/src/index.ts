@@ -12,7 +12,7 @@ const FacebookStrategy = require('passport-facebook').Strategy;
 const server: express.Express = express();
 
 const startNestApp = async (expressInstance: express.Express) => {
-    const app: Promise<INestApplication> = NestFactory.create(AppModule, expressInstance);
+    const app = NestFactory.create(AppModule, expressInstance);
     app.then(instance => {
         instance.use(cors());
         passport.use(new FacebookStrategy({
