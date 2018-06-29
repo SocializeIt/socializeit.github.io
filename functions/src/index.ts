@@ -3,10 +3,6 @@ import * as express from 'express';
 import * as passport from 'passport';
 import * as cors from 'cors';
 
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './modules/app.module';
-import { INestApplication } from '@nestjs/common';
-
 const FacebookStrategy = require('passport-facebook').Strategy;
 // const TwitterStrategy = require('passport-twitter').Strategy;
 const server: express.Express = express();
@@ -15,9 +11,7 @@ const log = (v) => {
     console.log(v);
 }
 
-const startNestApp = async (expressInstance: express.Express) => {
-    const app = await NestFactory.create(AppModule, expressInstance);
-    app.use(cors());
+    server.use(cors());
     passport.use(new FacebookStrategy({
         clientID: '636207509774692',
         clientSecret: 'c3048a2745b2973133478e0a8f3f99bc',
@@ -29,10 +23,8 @@ const startNestApp = async (expressInstance: express.Express) => {
     }));
 
     console.log('pasport', JSON.stringify(passport));
-    app.use(passport.initialize({ userProperty: 'user'}));
-    app.init().then(e => log(e)).catch(e => log(e));
-    };
-startNestApp(server).then(v => log(v)).catch(e => log(e));
+    server.use(passport.initialize({ userProperty: 'user'}));
+    server.init(); // .then(e => log(e)).catch(e => log(e));
 
 server.route('/auth/facebook/oauth')
     .get(passport.authenticate('facebook', function(err, user, info) {
