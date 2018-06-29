@@ -5,12 +5,6 @@ import { fbUserDto } from '../interfaces/fbuser.dto';
 
 @Injectable() 
 export class UsersService {
-    /**
-     *
-     */
-    constructor() {        
-    }
-
     findOne(criteria: any) {
         return new fbUserDto();
     }
