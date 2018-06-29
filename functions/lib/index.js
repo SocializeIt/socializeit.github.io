@@ -17,6 +17,9 @@ const app_module_1 = require("./modules/app.module");
 const FacebookStrategy = require('passport-facebook').Strategy;
 // const TwitterStrategy = require('passport-twitter').Strategy;
 const server = express();
+const log = (v) => {
+    console.log(v);
+};
 const startNestApp = (expressInstance) => __awaiter(this, void 0, void 0, function* () {
     const app = yield core_1.NestFactory.create(app_module_1.AppModule, expressInstance);
     app.use(cors());
@@ -24,12 +27,16 @@ const startNestApp = (expressInstance) => __awaiter(this, void 0, void 0, functi
         clientID: '636207509774692',
         clientSecret: 'c3048a2745b2973133478e0a8f3f99bc',
         callbackURL: 'http://localhost:5001/socialize-it/us-central1/api/auth/callback'
+    }, (e, p, i) => {
+        log(e);
+        log(p);
+        log(i);
     }));
     console.log('pasport', JSON.stringify(passport));
     app.use(passport.initialize({ userProperty: 'user' }));
-    app.init();
+    app.init().then(e => log(e)).catch(e => log(e));
 });
-startNestApp(server);
+startNestApp(server).then(v => log(v)).catch(e => log(e));
 server.route('/auth/facebook/oauth')
     .get(passport.authenticate('facebook', function (err, user, info) {
     console.log(err);

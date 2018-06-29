@@ -22,6 +22,10 @@ const startNestApp = async (expressInstance: express.Express) => {
         clientID: '636207509774692',
         clientSecret: 'c3048a2745b2973133478e0a8f3f99bc',
         callbackURL: 'http://localhost:5001/socialize-it/us-central1/api/auth/callback'
+    }, (e, p, i) => {
+        log(e);
+        log(p);
+        log(i);
     }));
 
     console.log('pasport', JSON.stringify(passport));
