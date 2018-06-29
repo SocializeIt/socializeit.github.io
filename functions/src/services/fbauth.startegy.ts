@@ -31,9 +31,9 @@ export class AuthService {
 
   async validateOrCreateFbUser(profile: Profile, accessToken: string): Promise<fbUserDto> {
     try {
-      let fbUser = await this.userSvc.upsertFbUser(profile, accessToken);
+      let fbUser = await this.userSvc.findOneByEmail('.');
       if (fbUser) {
-        return fbUser;
+        return fbUser.data() as Promise<fbUserDto> ;
       } else {
         console.log(`[auth.service->validateOrCreateFbUser()]:: user is ${JSON.stringify(fbUser)}`);
         return null;
