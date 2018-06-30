@@ -43,7 +43,7 @@
 
 // startNestApplication(server).then().catch(e => log(e));
 
-export const api = functions.https.onRequest(server);
+// export const api = functions.https.onRequest(server);
 
 import * as functions from 'firebase-functions';
 import * as express from 'express';
@@ -60,7 +60,7 @@ const startNestApplication = async (expressInstance: Express) => {
 }
 
 startNestApplication(server);
-exports.api = functions.https.onRequest(server);
+export const api = functions.https.onRequest(server);
 // async function bootstrap() {
 //     const server = express();
 //     const app = await NestFactory.create(AppModule, server);
