@@ -36,13 +36,13 @@ const startNestApplication = async (app: express.Express) => {
             console.log(user);
             console.log(info);
         }));    
-    return instance;
+    // return instance;
 }
 
 let srv: any;
 startNestApplication(server).then(v => srv = v).catch(e => log(e));
 
-export const api = functions.https.onRequest(srv);
+export const api = functions.https.onRequest(server);
 
 // async function bootstrap() {
 //     const server = express();

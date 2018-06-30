@@ -3,6 +3,6 @@ import { AuthController } from '../controllers/auth.controller';
 
 @Module({    
     controllers: [ AuthController],
-    exports: [AuthController]
+    exports: []
 })
 export class AppModule { }
