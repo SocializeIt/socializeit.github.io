@@ -50,12 +50,12 @@ import * as express from 'express';
 import { Express } from 'express';
 
 import { NestFactory } from '@nestjs/core';
-import { ApplicationModule } from './modules/app.module';
+import { AppModule } from './modules/app.module';
 
 const server: Express = express();
 
 const startNestApplication = async (expressInstance: Express) => {
-  const app = await NestFactory.create(ApplicationModule, expressInstance);
+  const app = await NestFactory.create(AppModule, expressInstance);
   app.init();
 }
 
