@@ -7,13 +7,13 @@ import { AppModule } from './modules/app.module';
 
 const FacebookStrategy = require('passport-facebook').Strategy;
 // const TwitterStrategy = require('passport-twitter').Strategy;
-const server: express.Express = express();
+const server = express();
 
 const log = (v) => {
     console.log(v);
 }
 
-const startNestApplication = async (app: express.Express) => {
+const startNestApplication = async (app) => {
     const instance = await NestFactory.create(AppModule, app, {cors:true});
 
     instance.use(cors());
@@ -28,19 +28,20 @@ const startNestApplication = async (app: express.Express) => {
     }));
 
     instance.use(passport.initialize({ userProperty: 'user'}));
-    instance.init().then(e => log(e)).catch(e => log(e));
+    instance.init()
+        .then()
+        .catch(e => log(e));
 
     app.route('/auth/facebook/oauth')
         .get(passport.authenticate('facebook', function(err, user, info) {
-            console.log(err);
-            console.log(user);
-            console.log(info);
+            log(err);
+            log(user);
+            log(info);
         }));    
     // return instance;
 }
 
-let srv: any;
-startNestApplication(server).then(v => srv = v).catch(e => log(e));
+startNestApplication(server).then().catch(e => log(e));
 
 export const api = functions.https.onRequest(server);
 
