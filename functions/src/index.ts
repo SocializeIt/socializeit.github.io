@@ -3,6 +3,7 @@ import * as express from 'express';
 import * as passport from 'passport';
 import * as cors from 'cors';
 import { NestFactory } from '@nestjs/core';
+import { } from '@nestjs/common';
 import { AppModule } from './modules/app.module';
 
 const FacebookStrategy = require('passport-facebook').Strategy;
@@ -14,7 +15,7 @@ const log = (v) => {
 }
 
 const startNestApplication = async (app: express.Express) => {
-    const instance = await NestFactory.create(AppModule);
+    const instance = await NestFactory.create(AppModule, app, {cors:true});
 
     instance.use(cors());
     passport.use(new FacebookStrategy({
@@ -44,6 +45,15 @@ let srv: any;
 startNestApplication(server).then(v => srv = v).catch(e => log(e));
 
 export const api = functions.https.onRequest(srv);
+
+// async function bootstrap() {
+//     const server = express();
+//     const app = await NestFactory.create(AppModule, server);
+    
+//     return await app.init();
+//   }
+
+// bootstrap();
 // // Start writing Firebase Functions
 // // https://firebase.google.com/docs/functions/typescript
 //
