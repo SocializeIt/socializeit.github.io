@@ -3,7 +3,6 @@ import * as express from 'express';
 import * as passport from 'passport';
 import * as cors from 'cors';
 import { NestFactory } from '@nestjs/core';
-import { } from '@nestjs/common';
 import { AppModule } from './modules/app.module';
 
 const FacebookStrategy = require('passport-facebook').Strategy;
@@ -28,7 +27,6 @@ const startNestApplication = async (app: express.Express) => {
         log(i);
     }));
 
-    console.log('pasport', JSON.stringify(passport));
     instance.use(passport.initialize({ userProperty: 'user'}));
     instance.init().then(e => log(e)).catch(e => log(e));
 
