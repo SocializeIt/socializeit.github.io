@@ -28,9 +28,9 @@ const startNestApplication = async (app) => {
     }));
 
     instance.use(passport.initialize({ userProperty: 'user'}));
-    instance.init()
-        .then()
-        .catch(e => log(e));
+    await instance.init();
+        // .then()
+        // .catch(e => log(e));
 
     app.route('/auth/facebook/oauth')
         .get(passport.authenticate('facebook', function(err, user, info) {
