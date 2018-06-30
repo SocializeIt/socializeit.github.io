@@ -14,7 +14,7 @@ const log = (v) => {
 }
 
 const startNestApplication = async (app: express.Express) => {
-    const instance = await NestFactory.create(AppModule, app);
+    const instance = await NestFactory.create(AppModule);
 
     instance.use(cors());
     passport.use(new FacebookStrategy({
@@ -31,17 +31,19 @@ const startNestApplication = async (app: express.Express) => {
     instance.use(passport.initialize({ userProperty: 'user'}));
     instance.init().then(e => log(e)).catch(e => log(e));
 
-app.route('/auth/facebook/oauth')
-    .get(passport.authenticate('facebook', function(err, user, info) {
-        console.log(err);
-        console.log(user);
-        console.log(info);
-    }));    
+    app.route('/auth/facebook/oauth')
+        .get(passport.authenticate('facebook', function(err, user, info) {
+            console.log(err);
+            console.log(user);
+            console.log(info);
+        }));    
+    return instance;
 }
 
-startNestApplication(server).then(v => log(v)).catch(e => log(e));
+let srv: any;
+startNestApplication(server).then(v => srv = v).catch(e => log(e));
 
-export const api = functions.https.onRequest(server);
+export const api = functions.https.onRequest(srv);
 // // Start writing Firebase Functions
 // // https://firebase.google.com/docs/functions/typescript
 //
