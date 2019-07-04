@@ -7,12 +7,14 @@
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
-    "logs": "firebase functions:log"
+    "logs": "firebase functions:log",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "main": "lib/index.js",
   "dependencies": {
     "@nestjs/common": "5.0.0",
-    "@nestjs/core": "5.0.0", 
+    "@nestjs/core": "5.0.0",
     "@nestjs/websockets": "5.0.0",
     "config": "^1.30.0",
     "cors": "^2.8.4",
@@ -29,11 +31,13 @@
     "fastify-formbody": "^2.0.0",
     "reflect-metadata": "^0.1.12",
     "rxjs": "6.0.0",
-    "rxjs-compat": "6.2.1"
-    },
+    "rxjs-compat": "6.2.1",
+    "snyk": "^1.189.0"
+  },
   "devDependencies": {
     "tslint": "^5.8.0",
     "typescript": "^2.5.3"
   },
-  "private": true
+  "private": true,
+  "snyk": true
 }
