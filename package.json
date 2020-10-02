@@ -26,7 +26,7 @@
     "carbon-components": "^9.1.1",
     "core-js": "^2.5.4",
     "cors": "^2.8.4",
-    "firebase": "^5.1.0",
+    "firebase": "^7.22.0",
     "font-awesome": "^4.7.0",
     "github-api": "^3.0.0",
     "jquery": "^3.3.1",
