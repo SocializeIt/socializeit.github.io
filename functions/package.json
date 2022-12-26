@@ -14,7 +14,7 @@
     "@nestjs/common": "5.0.0",
     "@nestjs/core": "5.0.0", 
     "@nestjs/websockets": "5.0.0",
-    "config": "^1.30.0",
+    "config": "^3.3.1",
     "cors": "^2.8.4",
     "express": "^4.16.3",
     "firebase-admin": "~5.12.1",
