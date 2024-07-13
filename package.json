@@ -22,7 +22,7 @@
     "@angular/router": "^6.0.3",
     "@nestjs/microservices": "^5.0.1",
     "angularfire2": "^5.0.0-rc.11",
-    "bootstrap": "^4.1.1",
+    "bootstrap": "^5.0.0",
     "carbon-components": "^9.1.1",
     "core-js": "^2.5.4",
     "cors": "^2.8.4",
